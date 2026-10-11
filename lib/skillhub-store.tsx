@@ -32,8 +32,6 @@ interface SkillHubContextType {
   setIsNotificationOpen: (open: boolean) => void;
   isMessagesOpen: boolean;
   setIsMessagesOpen: (open: boolean) => void;
-  browserFrameEnabled: boolean;
-  setBrowserFrameEnabled: (enabled: boolean) => void;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   addCourse: (course: Omit<Course, "id">) => void;
@@ -56,7 +54,6 @@ export function SkillHubProvider({ children }: { children: React.ReactNode }) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [isMessagesOpen, setIsMessagesOpen] = useState(false);
-  const [browserFrameEnabled, setBrowserFrameEnabled] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
   const addCourse = (newCourse: Omit<Course, "id">) => {
@@ -76,7 +73,6 @@ export function SkillHubProvider({ children }: { children: React.ReactNode }) {
   };
 
   const sendMessageToStudent = (studentId: string, message: string) => {
-    // In-memory acknowledgment
     console.log(`Message sent to student ${studentId}:`, message);
   };
 
@@ -103,8 +99,6 @@ export function SkillHubProvider({ children }: { children: React.ReactNode }) {
         setIsNotificationOpen,
         isMessagesOpen,
         setIsMessagesOpen,
-        browserFrameEnabled,
-        setBrowserFrameEnabled,
         searchQuery,
         setSearchQuery,
         addCourse,
