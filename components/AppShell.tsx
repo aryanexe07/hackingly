@@ -59,33 +59,37 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   ];
 
   return (
-    <div className="min-h-screen bg-[#ECEFF3] flex p-3 sm:p-4 lg:p-5 gap-3 sm:gap-4 lg:gap-5 overflow-x-hidden selection:bg-neutral-900 selection:text-white">
-      {/* 1. LEFT SIDEBAR: Complete Glassmorphism Bar */}
+    <div className="min-h-screen lg:h-screen lg:max-h-screen bg-[#ECEFF3] flex overflow-hidden selection:bg-neutral-900 selection:text-white">
+      {/* 1. LEFT SIDEBAR: At the back on the base canvas layer */}
       <aside
-        className={`glass-sidebar rounded-[28px] sm:rounded-[32px] flex flex-col justify-between py-6 transition-all duration-300 ease-in-out flex-shrink-0 z-30 ${
-          sidebarCollapsed ? "w-20 px-2" : "w-64 px-5"
+        className={`flex flex-col justify-between py-6 transition-all duration-300 ease-in-out flex-shrink-0 z-20 ${
+          sidebarCollapsed ? "w-20 px-3" : "w-64 pl-6 pr-4"
         }`}
       >
-        <div>
+        <div className="flex-1 flex flex-col min-h-0">
           {/* Logo & Collapse Header */}
           <div
-            className={`flex items-center pb-8 ${
+            className={`flex items-center pb-7 ${
               sidebarCollapsed
                 ? "flex-col gap-4 justify-center"
                 : "justify-between px-1"
             }`}
           >
             {sidebarCollapsed ? (
-              <div className="w-10 h-10 rounded-2xl bg-white/80 shadow-sm border border-white flex items-center justify-center text-neutral-900">
+              <button
+                onClick={() => setSidebarCollapsed(false)}
+                className="w-10 h-10 flex items-center justify-center text-neutral-900 hover:text-neutral-700 transition-colors"
+                title="Expand Sidebar"
+              >
                 <SkillHubLogoIcon className="w-6 h-6" color="currentColor" />
-              </div>
+              </button>
             ) : (
               <SkillHubLogo />
             )}
 
             <button
               onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-              className="p-2 hover:bg-white/80 rounded-xl text-neutral-400 hover:text-neutral-800 transition-colors shadow-sm bg-white/40 border border-white/60"
+              className="p-1.5 hover:bg-neutral-200/50 rounded-xl text-neutral-400 hover:text-neutral-700 transition-colors flex items-center justify-center"
               title={sidebarCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
             >
               {sidebarCollapsed ? (
@@ -96,15 +100,16 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             </button>
           </div>
 
-          {/* Navigation Section: Main */}
-          <div className="space-y-6">
+          {/* Navigation Section: Scrollable middle area */}
+          <div className="flex-1 overflow-y-auto space-y-6 pr-0.5">
+            {/* Main Navigation Group */}
             <div>
               {!sidebarCollapsed ? (
-                <span className="text-[11px] font-bold uppercase tracking-wider text-neutral-400 block mb-2 px-3">
+                <span className="text-[11px] font-semibold text-neutral-400 block mb-2 px-3.5">
                   Main
                 </span>
               ) : (
-                <div className="w-8 h-px bg-neutral-300/40 mx-auto my-2" />
+                <div className="w-8 h-px bg-neutral-200/80 mx-auto my-2" />
               )}
 
               <nav className="space-y-1.5">
@@ -119,17 +124,19 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                       href={item.href}
                       className={`group relative flex items-center transition-all duration-150 ${
                         sidebarCollapsed
-                          ? "w-12 h-12 justify-center mx-auto rounded-2xl"
+                          ? "w-11 h-11 justify-center mx-auto rounded-2xl"
                           : "gap-3 px-3.5 py-2.5 rounded-2xl text-xs"
                       } ${
                         isActive
-                          ? "bg-white text-neutral-900 font-bold shadow-[0_4px_16px_rgba(0,0,0,0.06)] border border-neutral-100"
-                          : "text-neutral-500 hover:text-neutral-900 hover:bg-white/70 font-medium"
+                          ? "bg-white text-neutral-900 font-semibold shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-neutral-200/50"
+                          : "text-neutral-500 hover:text-neutral-900 hover:bg-neutral-200/40 font-medium"
                       }`}
                     >
                       <item.icon
                         className={`w-4 h-4 flex-shrink-0 transition-transform group-hover:scale-105 ${
-                          isActive ? "text-neutral-900" : "text-neutral-400"
+                          isActive
+                            ? "text-neutral-900"
+                            : "text-neutral-400 group-hover:text-neutral-600"
                         }`}
                       />
                       {!sidebarCollapsed && <span>{item.name}</span>}
@@ -146,14 +153,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               </nav>
             </div>
 
-            {/* Navigation Section: Others */}
+            {/* Others Navigation Group */}
             <div>
               {!sidebarCollapsed ? (
-                <span className="text-[11px] font-bold uppercase tracking-wider text-neutral-400 block mb-2 px-3">
+                <span className="text-[11px] font-semibold text-neutral-400 block mb-2 px-3.5">
                   Others
                 </span>
               ) : (
-                <div className="w-8 h-px bg-neutral-300/40 mx-auto my-2" />
+                <div className="w-8 h-px bg-neutral-200/80 mx-auto my-2" />
               )}
 
               <nav className="space-y-1.5">
@@ -166,17 +173,19 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                       href={item.href}
                       className={`group relative flex items-center transition-all duration-150 ${
                         sidebarCollapsed
-                          ? "w-12 h-12 justify-center mx-auto rounded-2xl"
+                          ? "w-11 h-11 justify-center mx-auto rounded-2xl"
                           : "gap-3 px-3.5 py-2.5 rounded-2xl text-xs"
                       } ${
                         isActive
-                          ? "bg-white text-neutral-900 font-bold shadow-[0_4px_16px_rgba(0,0,0,0.06)] border border-neutral-100"
-                          : "text-neutral-500 hover:text-neutral-900 hover:bg-white/70 font-medium"
+                          ? "bg-white text-neutral-900 font-semibold shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-neutral-200/50"
+                          : "text-neutral-500 hover:text-neutral-900 hover:bg-neutral-200/40 font-medium"
                       }`}
                     >
                       <item.icon
                         className={`w-4 h-4 flex-shrink-0 transition-transform group-hover:scale-105 ${
-                          isActive ? "text-neutral-900" : "text-neutral-400"
+                          isActive
+                            ? "text-neutral-900"
+                            : "text-neutral-400 group-hover:text-neutral-600"
                         }`}
                       />
                       {!sidebarCollapsed && <span>{item.name}</span>}
@@ -194,27 +203,28 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </div>
         </div>
 
-        {/* Bottom User Capsule in Sidebar */}
-        <div className="pt-4 border-t border-white/60">
+        {/* Bottom User Profile Section */}
+        <div className="pt-4 border-t border-neutral-200/60 flex-shrink-0">
           <Link
             href="/settings"
-            className={`flex items-center transition-all duration-150 rounded-2xl hover:bg-white/60 ${
+            className={`group flex items-center transition-all duration-150 rounded-2xl hover:bg-neutral-200/40 ${
               sidebarCollapsed
-                ? "justify-center p-1.5"
-                : "gap-3 p-2.5 bg-white/40 border border-white/60 shadow-sm"
+                ? "justify-center p-2 mx-auto"
+                : "gap-3 px-3.5 py-2.5"
             }`}
+            title="View Profile Settings"
           >
             <img
               src={user.avatar}
               alt={user.fullName}
-              className="w-9 h-9 rounded-full object-cover ring-2 ring-white shadow-sm flex-shrink-0"
+              className="w-9 h-9 rounded-full object-cover flex-shrink-0"
             />
             {!sidebarCollapsed && (
               <div className="min-w-0 flex-1">
-                <p className="text-xs font-bold text-neutral-900 truncate">
+                <p className="text-xs font-semibold text-neutral-900 truncate group-hover:text-neutral-950">
                   {user.fullName}
                 </p>
-                <p className="text-[10px] text-neutral-400 truncate font-medium">
+                <p className="text-[11px] text-neutral-400 truncate font-medium">
                   Instructor
                 </p>
               </div>
@@ -223,8 +233,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </div>
       </aside>
 
-      {/* 2. MAIN TAB: Pristine Solid White Floating Window (strictly NON-glassmorphic) */}
-      <div className="flex-1 min-w-0 flex flex-col">
+      {/* 2. MAIN CONTENT BLOCK: Solid White Card overlayed on the navbar layer */}
+      <div className="flex-1 min-w-0 p-3 sm:p-4 lg:p-5 pl-0 sm:pl-0 lg:pl-0 flex flex-col h-full">
         <main className="floating-window flex-1 min-w-0 flex flex-col p-6 sm:p-8 lg:p-9 relative overflow-y-auto">
           {/* Dedicated Floating Window Top Bar matching Image 1 & Image 4 */}
           <div className="flex items-center justify-between gap-4 mb-7 pb-2">
