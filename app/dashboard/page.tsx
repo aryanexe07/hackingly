@@ -2,440 +2,213 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { useSutra } from "@/lib/store";
-import { EvidenceDrawer } from "@/components/EvidenceDrawer";
+import { useSkillHub } from "@/lib/store";
+import { SkillHubProgressBar } from "@/components/SkillHubProgressBar";
+import { EngagementChart } from "@/components/EngagementChart";
 import {
-  AlertTriangle,
+  Plus,
+  ChevronDown,
   Clock,
   ArrowUpRight,
-  TrendingDown,
-  Sparkles,
-  ChevronRight,
-  ShieldAlert,
-  CheckCircle2,
-  AlertCircle,
-  FileText,
-  Activity,
-  Layers,
-  Calendar,
-  Flame,
+  ArrowUp,
+  ArrowDown,
 } from "lucide-react";
 
 export default function DashboardPage() {
-  const {
-    currentPersona,
-    signals,
-    cases,
-    selectedSignalId,
-    setSelectedSignalId,
-    loadScenario,
-    resetAllData,
-  } = useSutra();
-
-  const [activeTab, setActiveTab] = useState<"ALL" | "MY_ASSIGNED" | "OVERDUE" | "NEEDS_TRIAGE">("ALL");
-
-  // Metrics calculation
-  const urgentSignals = signals.filter((s) => s.priority === "PRIORITY_REVIEW");
-  const myCases = cases.filter((c) => c.status !== "RESOLVED");
-  const escalations = cases.filter((c) => c.status === "ESCALATED" || c.isOverdue);
-  const resolvedCasesCount = cases.filter((c) => c.status === "RESOLVED").length + 14;
-
-  // Filter feed items
-  const activeSignals = signals.filter((s) => {
-    if (activeTab === "ALL") return true;
-    if (activeTab === "NEEDS_TRIAGE") return s.status === "PENDING_TRIAGE";
-    if (activeTab === "OVERDUE") return s.isOverdue;
-    if (activeTab === "MY_ASSIGNED") return s.mentorName.includes(currentPersona.name.split(" ")[1] || "");
-    return true;
-  });
-
-  const selectedSignal = signals.find((s) => s.id === selectedSignalId) || null;
+  const { user, setIsNewCourseModalOpen } = useSkillHub();
+  const [growthTimeframe, setGrowthTimeframe] = useState("This Month");
+  const [analyticsTimeframe, setAnalyticsTimeframe] = useState("This Month");
 
   return (
-    <div className="space-y-8">
-      {/* 1. HERO ACTION STRIP */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white border border-slate-200/90 rounded-3xl p-6 shadow-sm">
-        <div>
-          <div className="flex items-center gap-2 mb-1.5">
-            <span className="text-[11px] font-bold text-indigo-600 tracking-wider uppercase bg-indigo-50 px-2.5 py-0.5 rounded-full font-mono">
-              Intervention Command Center
-            </span>
-            <span className="text-slate-300">•</span>
-            <span className="text-xs text-slate-500 font-medium">
-              Academic Term Autumn 2026
-            </span>
-          </div>
-          <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 font-heading">
-            Good morning, {currentPersona.name}
-          </h1>
-          <p className="text-xs text-slate-500 mt-1">
-            {currentPersona.title} • {currentPersona.department}
-          </p>
-        </div>
+    <div className="space-y-6">
+      {/* 1. TOP HEADER: "Welcome back, Sarah!" and "+ New Course" */}
+      <div className="flex items-center justify-between gap-4">
+        <h1 className="text-2xl md:text-3xl font-extrabold text-neutral-900 tracking-tight font-heading">
+          Welcome back, {user.name}!
+        </h1>
 
-        {/* Quick Scenario Rehearsal Ribbon */}
-        <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 p-2 rounded-2xl">
-          <span className="text-[11px] font-bold text-slate-600 px-2 flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-indigo-600" /> One-Click Rehearsal:
-          </span>
-          <button
-            onClick={() => loadScenario(1)}
-            className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition-all shadow-sm"
-          >
-            Launch STU-1042 Flow
-          </button>
-          <button
-            onClick={() => loadScenario(4)}
-            className="px-3 py-1.5 bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition-all"
-          >
-            Test Escalation
-          </button>
-        </div>
+        <button
+          onClick={() => setIsNewCourseModalOpen(true)}
+          className="flex items-center gap-2 px-5 py-2.5 bg-neutral-900 hover:bg-neutral-800 active:scale-[0.98] text-white rounded-full text-xs font-semibold shadow-sm transition-all"
+        >
+          <Plus className="w-4 h-4" />
+          <span>New Course</span>
+        </button>
       </div>
 
-      {/* 2. FOUR QUICK STAT COUNTERS */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* KPI 1: Urgent Signals */}
-        <div className="bg-white border border-rose-100 rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
-          <div className="absolute top-0 right-0 w-24 h-24 bg-rose-50/70 rounded-full blur-2xl -mr-6 -mt-6 pointer-events-none" />
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-rose-800 flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" /> Urgent Signals
-            </span>
-            <span className="text-[10px] font-mono bg-rose-100 text-rose-800 px-2 py-0.5 rounded-full font-bold">
-              &lt;24h SLA
-            </span>
-          </div>
-          <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-extrabold text-slate-900 font-mono">
-              {urgentSignals.length}
-            </span>
-            <span className="text-xs text-rose-600 font-semibold font-mono">
-              Needs triage today
-            </span>
-          </div>
-          <p className="text-[11px] text-slate-500 mt-2">
-            Multi-factor drops requiring review
-          </p>
-        </div>
-
-        {/* KPI 2: Active Cases */}
-        <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-600 flex items-center gap-1.5">
-              <Layers className="w-3.5 h-3.5 text-indigo-600" /> Active Cases
-            </span>
-            <span className="text-[10px] font-mono bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-semibold">
-              This Week
-            </span>
-          </div>
-          <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-extrabold text-slate-900 font-mono">
-              {myCases.length}
-            </span>
-            <span className="text-xs text-slate-500 font-medium">
-              under ongoing SLA
-            </span>
-          </div>
-          <p className="text-[11px] text-slate-500 mt-2">
-            Owned support touchpoints
-          </p>
-        </div>
-
-        {/* KPI 3: Escalations */}
-        <div className="bg-white border border-amber-200/80 rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-amber-800 flex items-center gap-1.5">
-              <AlertTriangle className="w-3.5 h-3.5 text-amber-500" /> Escalations
-            </span>
-            <span className="text-[10px] font-mono bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full font-bold">
-              Action Required
-            </span>
-          </div>
-          <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-extrabold text-amber-950 font-mono">
-              {escalations.length}
-            </span>
-            <span className="text-xs text-amber-700 font-semibold">
-              SLA breached
-            </span>
-          </div>
-          <p className="text-[11px] text-slate-500 mt-2">
-            Elevated to Department Chair
-          </p>
-        </div>
-
-        {/* KPI 4: Follow-ups Logged */}
-        <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 flex items-center gap-1.5">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> Follow-ups Logged
-            </span>
-            <span className="text-[10px] font-mono bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-semibold">
-              Monthly
-            </span>
-          </div>
-          <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-extrabold text-slate-900 font-mono">
-              {resolvedCasesCount}
-            </span>
-            <span className="text-xs text-emerald-700 font-semibold font-mono">
-              +18% throughput
-            </span>
-          </div>
-          <p className="text-[11px] text-slate-500 mt-2">
-            Accountable documented actions
-          </p>
-        </div>
-      </div>
-
-      {/* 3. TWO-COLUMN SPLIT (60% / 40%) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* LEFT COLUMN (60% ~ 7 cols): Immediate Attention Feed */}
-        <div className="lg:col-span-7 space-y-4">
-          <div className="bg-white border border-slate-200/90 rounded-3xl p-6 shadow-sm space-y-5">
-            {/* Header & Filter Tabs */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
-              <div>
-                <h2 className="text-lg font-bold text-slate-900 font-heading">
-                  Immediate Attention Feed
-                </h2>
-                <p className="text-xs text-slate-500">
-                  Signals and case milestones requiring human pedagogical triage
-                </p>
-              </div>
-
-              {/* Tabs */}
-              <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl text-xs font-medium">
-                {(["ALL", "NEEDS_TRIAGE", "MY_ASSIGNED", "OVERDUE"] as const).map((tab) => (
-                  <button
-                    key={tab}
-                    onClick={() => setActiveTab(tab)}
-                    className={`px-3 py-1.5 rounded-lg transition-colors ${
-                      activeTab === tab
-                        ? "bg-white text-slate-900 font-bold shadow-sm"
-                        : "text-slate-600 hover:text-slate-900"
-                    }`}
-                  >
-                    {tab.replace("_", " ")}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* List of Signal Action Cards */}
-            <div className="space-y-3">
-              {activeSignals.map((signal) => {
-                const isUrgent = signal.priority === "PRIORITY_REVIEW";
-                const isConverted = signal.status === "CONVERTED_TO_CASE";
-
-                return (
-                  <div
-                    key={signal.id}
-                    className={`p-4 rounded-2xl border transition-all ${
-                      isUrgent
-                        ? "bg-white border-rose-200/80 hover:border-rose-300 hover:shadow-md"
-                        : "bg-white border-slate-200/80 hover:border-slate-300 hover:shadow-md"
-                    }`}
-                  >
-                    <div className="flex items-start justify-between gap-3 mb-2">
-                      <div className="flex items-center gap-2.5">
-                        <span className="font-mono text-xs font-bold bg-slate-900 text-white px-2 py-0.5 rounded-md">
-                          {signal.studentId}
-                        </span>
-                        <span className="text-xs font-semibold text-slate-800">
-                          {signal.studentName}
-                        </span>
-                        <span className="text-[11px] text-slate-400 font-mono">
-                          ({signal.program})
-                        </span>
-                      </div>
-
-                      <div className="flex items-center gap-2">
-                        <span
-                          className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full font-mono ${
-                            isUrgent
-                              ? "bg-rose-100 text-rose-800"
-                              : signal.priority === "NEEDS_REVIEW"
-                              ? "bg-amber-100 text-amber-800"
-                              : "bg-sky-100 text-sky-800"
-                          }`}
-                        >
-                          {signal.priority.replace("_", " ")}
-                        </span>
-                        <span className="text-[10px] font-mono text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full flex items-center gap-1">
-                          <Clock className="w-3 h-3 text-slate-400" />
-                          {signal.isOverdue ? "Overdue" : `SLA: ${signal.slaHoursRemaining}h`}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Explainable plain-English rationale */}
-                    <div className="bg-slate-50/80 border border-slate-100 rounded-xl p-3 my-2.5">
-                      <p className="text-xs text-slate-700 font-medium leading-relaxed">
-                        {signal.explanation}
-                      </p>
-                      <div className="flex items-center justify-between mt-2 pt-2 border-t border-slate-200/50 text-[10px] text-slate-500 font-mono">
-                        <span>Rule: {signal.ruleId}</span>
-                        <span>{signal.dataQuality}</span>
-                      </div>
-                    </div>
-
-                    {/* Action Bar */}
-                    <div className="flex items-center justify-between pt-1">
-                      <Link
-                        href={`/students/${signal.studentId}`}
-                        className="text-xs text-indigo-600 hover:text-indigo-800 font-semibold flex items-center gap-1 hover:underline"
-                      >
-                        <span>Student 360° Profile</span>
-                        <ChevronRight className="w-3.5 h-3.5" />
-                      </Link>
-
-                      <div className="flex items-center gap-2">
-                        {isConverted ? (
-                          <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-xl flex items-center gap-1.5">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> Case Launched
-                          </span>
-                        ) : (
-                          <button
-                            onClick={() => setSelectedSignalId(signal.id)}
-                            className="px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 active:scale-[0.98] text-white text-xs font-bold rounded-xl shadow-sm transition-all flex items-center gap-1.5 cursor-pointer"
-                          >
-                            <span>Take Action</span>
-                            <ArrowUpRight className="w-3.5 h-3.5" />
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-
-        {/* RIGHT COLUMN (40% ~ 5 cols): SLA Health & Activity Stream */}
+      {/* 2. MAIN TWO-COLUMN DASHBOARD GRID (matching Image 1 1:1) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        {/* LEFT COLUMN (approx 5 cols) */}
         <div className="lg:col-span-5 space-y-6">
-          {/* SLA Health Radial Progress Card */}
-          <div className="bg-white border border-slate-200/90 rounded-3xl p-6 shadow-sm">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-base font-bold text-slate-900 font-heading">
-                SLA Compliance Health
+          {/* Card 1: Growth Overview */}
+          <div className="skill-card p-6 bg-white space-y-5">
+            {/* Header */}
+            <div className="flex items-center justify-between">
+              <h3 className="text-base font-semibold text-neutral-900 tracking-tight">
+                Growth Overview
               </h3>
-              <span className="text-xs font-mono text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full font-bold">
-                89% On-Time
+              <button className="flex items-center gap-1.5 px-3 py-1 bg-neutral-50 hover:bg-neutral-100 rounded-full border border-neutral-200/60 text-xs font-medium text-neutral-600 transition-colors">
+                <span>{growthTimeframe}</span>
+                <ChevronDown className="w-3.5 h-3.5 text-neutral-400" />
+              </button>
+            </div>
+
+            {/* Big 25k Number & Subtitle */}
+            <div>
+              <span className="text-4xl font-extrabold text-neutral-900 tracking-tight block">
+                25k
+              </span>
+              <span className="text-xs text-neutral-400 font-medium block mt-0.5">
+                Active Learners
               </span>
             </div>
 
-            {/* Circular Gauge Representation */}
-            <div className="flex items-center justify-center py-4">
-              <div className="relative w-44 h-44 flex items-center justify-center">
-                <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                  <circle
-                    cx="50"
-                    cy="50"
-                    r="40"
-                    stroke="#F1F5F9"
-                    strokeWidth="10"
-                    fill="transparent"
-                  />
-                  <circle
-                    cx="50"
-                    cy="50"
-                    r="40"
-                    stroke="#5850EC"
-                    strokeWidth="10"
-                    strokeDasharray="251.2"
-                    strokeDashoffset="27.6" // ~89%
-                    strokeLinecap="round"
-                    fill="transparent"
-                    className="transition-all duration-1000 ease-out"
-                  />
-                </svg>
-                <div className="absolute flex flex-col items-center justify-center">
-                  <span className="text-3xl font-extrabold text-slate-900 font-mono">
-                    89%
-                  </span>
-                  <span className="text-[10px] text-slate-500 font-semibold uppercase tracking-wider">
-                    SLA Met
-                  </span>
-                </div>
+            {/* 12K New Enrollments vs 15K Total Enrollments */}
+            <div className="flex items-center justify-between pt-1">
+              <div>
+                <span className="text-base font-bold text-neutral-900 block">
+                  12K
+                </span>
+                <span className="text-[11px] text-neutral-400 block mt-0.5">
+                  New Enrollments
+                </span>
+              </div>
+              <div className="text-right">
+                <span className="text-base font-bold text-neutral-900 block">
+                  15K
+                </span>
+                <span className="text-[11px] text-neutral-400 block mt-0.5">
+                  Total Enrollments
+                </span>
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 pt-3 border-t border-slate-100 text-center">
-              <div className="p-2 rounded-xl bg-slate-50">
-                <span className="block text-[11px] text-slate-500">Avg Triage Speed</span>
-                <span className="block text-sm font-bold text-slate-900 font-mono">4.2 hours</span>
-              </div>
-              <div className="p-2 rounded-xl bg-slate-50">
-                <span className="block text-[11px] text-slate-500">Escalation Rate</span>
-                <span className="block text-sm font-bold text-amber-700 font-mono">11% total</span>
-              </div>
+            {/* Signature Dual-Layer Gradient Tick Bar */}
+            <div className="pt-2">
+              <SkillHubProgressBar progress={38} heightClass="h-5" />
             </div>
           </div>
 
-          {/* Activity Stream Feed */}
-          <div className="bg-white border border-slate-200/90 rounded-3xl p-6 shadow-sm">
-            <h3 className="text-base font-bold text-slate-900 font-heading mb-4">
-              Recent Chronological Audit Feed
-            </h3>
-
-            <div className="space-y-4">
-              <div className="flex items-start gap-3">
-                <div className="w-7 h-7 rounded-full bg-indigo-50 border border-indigo-200 flex items-center justify-center text-indigo-600 flex-shrink-0 mt-0.5">
-                  <FileText className="w-3.5 h-3.5" />
-                </div>
-                <div>
-                  <p className="text-xs text-slate-800">
-                    <strong>Prof. Sharma</strong> logged check-in touchpoint on{" "}
-                    <Link href="/cases/CASE-2026-089" className="font-mono text-indigo-600 hover:underline">
-                      CASE-2026-089
-                    </Link>
-                  </p>
-                  <p className="text-[10px] text-slate-400 font-mono mt-0.5">
-                    2 hours ago • Action verified
-                  </p>
+          {/* Card 2: Advanced UI/UX Design Live Card */}
+          <div className="skill-card p-6 bg-white flex flex-col justify-between min-h-[190px]">
+            <div className="flex items-start justify-between">
+              <div>
+                <h3 className="text-base font-semibold text-neutral-900 tracking-tight">
+                  Advanced UI/UX Design
+                </h3>
+                <div className="flex items-center gap-1.5 text-xs text-neutral-400 mt-1">
+                  <Clock className="w-3.5 h-3.5" />
+                  <span>Today, 10:00 AM</span>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3">
-                <div className="w-7 h-7 rounded-full bg-rose-50 border border-rose-200 flex items-center justify-center text-rose-600 flex-shrink-0 mt-0.5">
-                  <ShieldAlert className="w-3.5 h-3.5" />
-                </div>
-                <div>
-                  <p className="text-xs text-slate-800">
-                    <strong className="text-rose-700">STU-1014</strong> escalated to HOD Dr. Rao due to 72h SLA breach.
-                  </p>
-                  <p className="text-[10px] text-slate-400 font-mono mt-0.5">
-                    Yesterday, 10:15 AM • Automated Policy Daemon
-                  </p>
+              <Link
+                href="/courses"
+                className="w-8 h-8 rounded-full bg-neutral-50 hover:bg-neutral-100 border border-neutral-200/60 flex items-center justify-center text-neutral-500 hover:text-neutral-900 transition-colors"
+                title="View Course"
+              >
+                <ArrowUpRight className="w-4 h-4" />
+              </Link>
+            </div>
+
+            {/* Bottom avatars & Live badge */}
+            <div className="flex items-center justify-between pt-6">
+              {/* 3 Avatars Stack + "8+" */}
+              <div className="flex items-center -space-x-2">
+                <img
+                  src="/assets/avatar-marvin.jpg"
+                  alt="Student"
+                  className="w-8 h-8 rounded-full object-cover ring-2 ring-white"
+                />
+                <img
+                  src="/assets/avatar-albert.jpg"
+                  alt="Student"
+                  className="w-8 h-8 rounded-full object-cover ring-2 ring-white"
+                />
+                <img
+                  src="/assets/avatar-bessie.jpg"
+                  alt="Student"
+                  className="w-8 h-8 rounded-full object-cover ring-2 ring-white"
+                />
+                <div className="w-8 h-8 rounded-full bg-neutral-100 border-2 border-white flex items-center justify-center text-[10px] font-bold text-neutral-600 pl-0.5">
+                  8+
                 </div>
               </div>
 
-              <div className="flex items-start gap-3">
-                <div className="w-7 h-7 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600 flex-shrink-0 mt-0.5">
-                  <CheckCircle2 className="w-3.5 h-3.5" />
-                </div>
-                <div>
-                  <p className="text-xs text-slate-800">
-                    Case <span className="font-mono font-semibold">CASE-2026-051</span> marked <strong>RESOLVED</strong> (Karan Joshi).
-                  </p>
-                  <p className="text-[10px] text-slate-400 font-mono mt-0.5">
-                    3 days ago • Outcome verified
-                  </p>
-                </div>
+              {/* Live Badge */}
+              <div className="flex items-center gap-1.5 px-3 py-1 bg-rose-50 border border-rose-100 rounded-full text-xs font-semibold text-rose-600">
+                <span className="w-2 h-2 rounded-full bg-rose-500 animate-live-pulse" />
+                <span>Live</span>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Slide-over Evidence-to-Action Drawer */}
-      <EvidenceDrawer
-        signal={selectedSignal}
-        onClose={() => setSelectedSignalId(null)}
-      />
+        {/* RIGHT COLUMN (approx 7 cols) */}
+        <div className="lg:col-span-7 space-y-6">
+          {/* Card 1: Learning Analytics */}
+          <div className="skill-card p-6 bg-white space-y-5">
+            {/* Header */}
+            <div className="flex items-center justify-between">
+              <h3 className="text-base font-semibold text-neutral-900 tracking-tight">
+                Learning Analytics
+              </h3>
+              <button className="flex items-center gap-1.5 px-3 py-1 bg-neutral-50 hover:bg-neutral-100 rounded-full border border-neutral-200/60 text-xs font-medium text-neutral-600 transition-colors">
+                <span>{analyticsTimeframe}</span>
+                <ChevronDown className="w-3.5 h-3.5 text-neutral-400" />
+              </button>
+            </div>
+
+            {/* 3 Sub-Cards side by side */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+              {/* Sub-card 1: Total Students */}
+              <div className="skill-card-subtle p-4 bg-neutral-50/80 border border-neutral-100">
+                <span className="text-[11px] font-medium text-neutral-400 block">
+                  Total Students
+                </span>
+                <span className="text-xl font-extrabold text-neutral-900 mt-2 block">
+                  28K
+                </span>
+                <span className="text-[11px] font-medium text-emerald-600 mt-2 flex items-center gap-1">
+                  <ArrowUp className="w-3 h-3 stroke-[2.5]" />
+                  <span>+15% vs last week</span>
+                </span>
+              </div>
+
+              {/* Sub-card 2: Avg. Learning Time */}
+              <div className="skill-card-subtle p-4 bg-neutral-50/80 border border-neutral-100">
+                <span className="text-[11px] font-medium text-neutral-400 block">
+                  Avg. Learning Time
+                </span>
+                <span className="text-xl font-extrabold text-neutral-900 mt-2 block">
+                  4h32m
+                </span>
+                <span className="text-[11px] font-medium text-rose-500 mt-2 flex items-center gap-1">
+                  <ArrowDown className="w-3 h-3 stroke-[2.5]" />
+                  <span>-15% vs last week</span>
+                </span>
+              </div>
+
+              {/* Sub-card 3: Completion Rate */}
+              <div className="skill-card-subtle p-4 bg-neutral-50/80 border border-neutral-100">
+                <span className="text-[11px] font-medium text-neutral-400 block">
+                  Completion Rate
+                </span>
+                <span className="text-xl font-extrabold text-neutral-900 mt-2 block">
+                  68.4%
+                </span>
+                <span className="text-[11px] font-medium text-emerald-600 mt-2 flex items-center gap-1">
+                  <ArrowUp className="w-3 h-3 stroke-[2.5]" />
+                  <span>+12% vs last week</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Card 2: Student Engagement Trend */}
+          <EngagementChart />
+        </div>
+      </div>
     </div>
   );
 }
