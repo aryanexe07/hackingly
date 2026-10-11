@@ -18,15 +18,37 @@ const DEFAULT_POINTS: Point[] = [
   { month: "Jul", value: 3950 },
 ];
 
+const TIMEFRAME_POINTS: Record<string, Point[]> = {
+  "This Week": [
+    { month: "Mon", value: 850 },
+    { month: "Tue", value: 1400 },
+    { month: "Wed", value: 2100 },
+    { month: "Thu", value: 2600 },
+    { month: "Fri", value: 3400 },
+    { month: "Sat", value: 3100 },
+    { month: "Sun", value: 3950 },
+  ],
+  "This Month": DEFAULT_POINTS,
+  "This Year": [
+    { month: "2023", value: 650 },
+    { month: "2024", value: 1400 },
+    { month: "2025", value: 2600 },
+    { month: "2026", value: 3950 },
+  ],
+};
+
 export function EngagementChart({
-  points = DEFAULT_POINTS,
+  points,
+  timeframe = "This Month",
   title = "Student Engagement Trend",
   className = "",
 }: {
   points?: Point[];
+  timeframe?: string;
   title?: string;
   className?: string;
 }) {
+  const chartPoints = points || TIMEFRAME_POINTS[timeframe] || DEFAULT_POINTS;
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
 
   // SVG dimensions
@@ -42,8 +64,8 @@ export function EngagementChart({
   const maxVal = 4000;
 
   // Convert points to SVG coordinates
-  const coords = points.map((p, i) => {
-    const x = padLeft + (i / (points.length - 1)) * chartW;
+  const coords = chartPoints.map((p, i) => {
+    const x = padLeft + (i / (chartPoints.length - 1)) * chartW;
     const y = padTop + chartH - (p.value / maxVal) * chartH;
     return { x, y, ...p };
   });
@@ -77,7 +99,7 @@ export function EngagementChart({
   const activePt = coords[activeIdx];
 
   return (
-    <div className={`skill-card p-6 bg-white relative ${className}`}>
+    <div className={`skill-card p-5 sm:p-6 bg-white relative ${className}`}>
       {/* Header */}
       <div className="flex items-center justify-between mb-2">
         <h3 className="text-base font-semibold text-neutral-900 tracking-tight">
@@ -110,11 +132,11 @@ export function EngagementChart({
         {/* Floating Tooltip Pill matching screenshots */}
         {activePt && (
           <div
-            className="absolute z-20 pointer-events-none transition-all duration-200 ease-out flex items-center gap-1.5 px-3 py-1 bg-white border border-neutral-100 rounded-full shadow-[0_4px_16px_rgba(0,0,0,0.08)] text-[11px] font-semibold text-neutral-800 whitespace-nowrap"
+            className="absolute z-20 pointer-events-none transition-all duration-200 ease-out flex items-center gap-1.5 px-2.5 sm:px-3 py-1 bg-white border border-neutral-100 rounded-full shadow-[0_4px_16px_rgba(0,0,0,0.08)] text-[10px] sm:text-[11px] font-semibold text-neutral-800 whitespace-nowrap"
             style={{
-              left: `${(activePt.x / width) * 100}%`,
+              left: `${Math.min(Math.max((activePt.x / width) * 100, 28), 75)}%`,
               top: `${(activePt.y / height) * 100}%`,
-              transform: "translate(-80%, -140%)",
+              transform: "translate(-50%, -140%)",
             }}
           >
             <ArrowUp className="w-3 h-3 text-emerald-600 stroke-[3]" />
@@ -190,11 +212,12 @@ export function EngagementChart({
               className="cursor-pointer"
               onMouseEnter={() => setHoveredIdx(idx)}
               onMouseLeave={() => setHoveredIdx(null)}
+              onTouchStart={() => setHoveredIdx(idx)}
             >
               <rect
-                x={pt.x - chartW / (points.length * 2)}
+                x={pt.x - chartW / (chartPoints.length * 2)}
                 y={padTop}
-                width={chartW / points.length}
+                width={chartW / chartPoints.length}
                 height={chartH}
                 fill="transparent"
               />

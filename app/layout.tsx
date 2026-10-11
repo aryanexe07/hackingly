@@ -4,8 +4,8 @@ import { SkillHubProvider } from "@/lib/store";
 import { AppShell } from "@/components/AppShell";
 
 export const metadata: Metadata = {
-  title: "SkillHub — Learn, Connect & Grow",
-  description: "SkillHub is your all-in-one platform for interactive courses, student engagement, learning analytics, and community growth.",
+  title: "Sutra — Learn, Connect & Grow",
+  description: "Sutra is your all-in-one platform for interactive courses, student engagement, learning analytics, and community growth.",
 };
 
 export default function RootLayout({
