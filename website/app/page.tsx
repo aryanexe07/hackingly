@@ -1,27 +1,26 @@
 import React from "react";
-import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
-import ProblemSolution from "../components/ProblemSolution";
-import InteractiveCaseSimulator from "../components/InteractiveCaseSimulator";
-import WorkflowSection from "../components/WorkflowSection";
-import PersonaShowcase from "../components/PersonaShowcase";
-import GovernanceTrust from "../components/GovernanceTrust";
-import MetricsImpact from "../components/MetricsImpact";
-import FaqSection from "../components/FaqSection";
+import LogoStrip from "../components/LogoStrip";
+import AboutBento from "../components/AboutBento";
+import CuriousShowcase from "../components/CuriousShowcase";
 import Footer from "../components/Footer";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#070B14] text-slate-100 flex flex-col">
-      <Navbar />
+    <main className="min-h-screen bg-white text-slate-900 flex flex-col font-sans selection:bg-[#d2f831] selection:text-slate-950">
+      {/* Hero with framed rounded card, Navbar, clouds and 3D arc cards */}
       <Hero />
-      <ProblemSolution />
-      <InteractiveCaseSimulator />
-      <WorkflowSection />
-      <PersonaShowcase />
-      <GovernanceTrust />
-      <MetricsImpact />
-      <FaqSection />
+
+      {/* Logoipsum Client Strip */}
+      <LogoStrip />
+
+      {/* About Us Bento Grid with Inline Text Icons */}
+      <AboutBento />
+
+      {/* Curious What Else I've Created 3D Arc Showcase (Image 2) */}
+      <CuriousShowcase />
+
+      {/* Clean high-end footer */}
       <Footer />
     </main>
   );
