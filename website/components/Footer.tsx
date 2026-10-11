@@ -11,17 +11,19 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 pb-16 border-b border-slate-800">
           <div>
             <h3 className="font-display font-extrabold text-2xl sm:text-3xl text-white tracking-tight">
-              Ready to build the future with us?
+              Ready to eliminate alert fatigue on your campus?
             </h3>
             <p className="text-slate-400 text-xs sm:text-sm mt-2 max-w-xl">
-              Unlock intelligent automation and data-driven consulting tailored for your organization.
+              Deploy SUTRA alongside Canvas, Moodle, or Blackboard in under 5 days with full FERPA &amp; DPDP compliance.
             </p>
           </div>
           <a
-            href="#"
+            href="http://localhost:3000/dashboard"
+            target="_blank"
+            rel="noreferrer"
             className="px-6 py-3 rounded-full bg-[#d2f831] hover:bg-[#c4ec26] text-slate-950 font-bold text-xs uppercase tracking-wider transition-transform hover:scale-105 shadow-md flex items-center gap-2"
           >
-            <span>GET STARTED TODAY</span>
+            <span>REQUEST PILOT ACCESS</span>
             <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
           </a>
         </div>
@@ -43,57 +45,57 @@ export default function Footer() {
                   clipRule="evenodd"
                 />
               </svg>
-              <span className="font-display font-bold text-lg text-white">Aeline</span>
+              <span className="font-display font-bold text-lg text-white">SUTRA</span>
             </div>
             <p className="text-slate-500 leading-relaxed max-w-xs">
-              Next-generation consulting framework designed for high-growth tech organizations.
+              The Student Support Orchestration Platform. Turning passive institutional alerts into owned, ethical, and SLA-governed intervention cases.
             </p>
           </div>
 
           <div>
             <h4 className="font-bold text-white uppercase tracking-wider mb-3 font-mono text-[11px]">
-              Navigation
+              Platform
             </h4>
             <ul className="space-y-2">
-              <li><a href="#" className="hover:text-white transition-colors">Home</a></li>
-              <li><a href="#services" className="hover:text-white transition-colors">Services</a></li>
-              <li><a href="#about" className="hover:text-white transition-colors">About Us</a></li>
-              <li><a href="#projects" className="hover:text-white transition-colors">Portfolio</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Overview</a></li>
+              <li><a href="#orchestration" className="hover:text-white transition-colors">Orchestration Engine</a></li>
+              <li><a href="#about" className="hover:text-white transition-colors">About SUTRA</a></li>
+              <li><a href="#projects" className="hover:text-white transition-colors">Case Workflows</a></li>
             </ul>
           </div>
 
           <div>
             <h4 className="font-bold text-white uppercase tracking-wider mb-3 font-mono text-[11px]">
-              Services
+              Integrations
             </h4>
             <ul className="space-y-2">
-              <li><span className="hover:text-white cursor-pointer">AI Strategy &amp; Advisory</span></li>
-              <li><span className="hover:text-white cursor-pointer">Intelligent Automation</span></li>
-              <li><span className="hover:text-white cursor-pointer">Cloud Data Training</span></li>
-              <li><span className="hover:text-white cursor-pointer">Continuous Intelligence</span></li>
+              <li><span className="hover:text-white cursor-pointer">Canvas LTI 1.3</span></li>
+              <li><span className="hover:text-white cursor-pointer">Blackboard Learn</span></li>
+              <li><span className="hover:text-white cursor-pointer">Moodle Connector</span></li>
+              <li><span className="hover:text-white cursor-pointer">Ellucian Banner</span></li>
             </ul>
           </div>
 
           <div>
             <h4 className="font-bold text-white uppercase tracking-wider mb-3 font-mono text-[11px]">
-              Template
+              Governance
             </h4>
             <ul className="space-y-2">
-              <li><span className="hover:text-white cursor-pointer">Buy License</span></li>
-              <li><span className="hover:text-white cursor-pointer">Documentation</span></li>
-              <li><span className="hover:text-white cursor-pointer">Style Guide</span></li>
-              <li><span className="hover:text-white cursor-pointer">Changelog</span></li>
+              <li><span className="hover:text-white cursor-pointer">FERPA Safeguards</span></li>
+              <li><span className="hover:text-white cursor-pointer">DPDP Compliance</span></li>
+              <li><span className="hover:text-white cursor-pointer">Zero Stigma Policy</span></li>
+              <li><span className="hover:text-white cursor-pointer">Audit Trail Ledger</span></li>
             </ul>
           </div>
         </div>
 
         {/* Bottom copyright */}
         <div className="pt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-          <p>© 2026 Aeline Inc. All rights reserved.</p>
+          <p>© 2026 SUTRA Higher Education Technologies. All rights reserved.</p>
           <div className="flex items-center gap-6">
-            <span className="hover:text-slate-400 cursor-pointer">Privacy Policy</span>
+            <span className="hover:text-slate-400 cursor-pointer">Privacy Charter</span>
+            <span className="hover:text-slate-400 cursor-pointer">Security Whitepaper</span>
             <span className="hover:text-slate-400 cursor-pointer">Terms of Service</span>
-            <span className="hover:text-slate-400 cursor-pointer">Security</span>
           </div>
         </div>
       </div>

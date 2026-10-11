@@ -30,21 +30,23 @@ export default function Hero() {
         {/* Main Hero Header Content */}
         <div className="relative z-10 pt-16 sm:pt-20 lg:pt-24 pb-8 max-w-5xl mx-auto px-4 text-center">
           <h1 className="text-4xl sm:text-6xl md:text-7xl font-display font-extrabold text-white tracking-tight leading-[1.08]">
-            Building the future with <br className="hidden sm:inline" />
-            AI and strategy
+            Building the future of <br className="hidden sm:inline" />
+            student support
           </h1>
 
           <p className="mt-6 text-sm sm:text-base md:text-lg text-white/90 max-w-2xl mx-auto font-normal leading-relaxed">
-            We help organizations unlock growth and efficiency through data-driven consulting and intelligent automation.
+            We help universities unlock student persistence through evidence-driven triage and policy-governed intervention orchestration.
           </p>
 
           {/* Action CTAs */}
           <div className="mt-8 flex items-center justify-center gap-3">
             <a
-              href="#demo"
+              href="http://localhost:3000/dashboard"
+              target="_blank"
+              rel="noreferrer"
               className="px-6 py-3 rounded-full bg-white/15 hover:bg-white/25 backdrop-blur-md text-white text-xs font-bold uppercase tracking-wider border border-white/25 transition-all shadow-sm"
             >
-              VIEW DEMO
+              VIEW PLATFORM
             </a>
 
             <a
@@ -60,12 +62,12 @@ export default function Hero() {
         </div>
 
         {/* 3D Arc Curved Mockup Ribbon */}
-        <div className="relative z-10 w-full overflow-hidden pt-6 pb-12">
+        <div id="orchestration" className="relative z-10 w-full overflow-hidden pt-6 pb-12">
           {/* Scrollable / Perspective Arc Wrapper */}
           <div className="max-w-7xl mx-auto px-4">
             <div className="flex items-center justify-center gap-3.5 sm:gap-4.5 overflow-x-auto no-scrollbar py-6 perspective-container">
               
-              {/* Card 1: Far Left - Bar Chart */}
+              {/* Card 1: Far Left - Attendance & Biometric Trends */}
               <div 
                 className="arc-card w-44 sm:w-48 shrink-0 rounded-2xl bg-white p-4 shadow-xl border border-white/80"
                 style={{
@@ -73,7 +75,7 @@ export default function Hero() {
                 }}
               >
                 <div className="flex items-center justify-between text-[11px] font-semibold text-slate-700 mb-3">
-                  <span>Intelligence in Every Decision</span>
+                  <span>Attendance &amp; LMS Roster</span>
                 </div>
                 <div className="h-28 flex items-end justify-between gap-1.5 pt-4 px-1">
                   <div className="w-3 bg-slate-100 rounded-t h-[40%]" />
@@ -84,7 +86,7 @@ export default function Hero() {
                 </div>
               </div>
 
-              {/* Card 2: Financial List */}
+              {/* Card 2: Support Case #8941 & SLA */}
               <div 
                 className="arc-card w-44 sm:w-48 shrink-0 rounded-2xl bg-white p-4 shadow-xl border border-white/80"
                 style={{
@@ -92,22 +94,22 @@ export default function Hero() {
                 }}
               >
                 <div className="flex items-baseline justify-between mb-2">
-                  <span className="text-base font-bold text-slate-900">$4,900</span>
-                  <span className="text-[10px] text-slate-400">$3,600</span>
+                  <span className="text-base font-bold text-slate-900">48h SLA</span>
+                  <span className="text-[10px] text-emerald-600 font-bold">18h Left</span>
                 </div>
                 <div className="space-y-2 pt-2">
                   <div className="p-2 rounded-lg bg-slate-50 flex items-center justify-between text-[11px]">
-                    <span className="text-slate-600 font-medium">Operations</span>
-                    <span className="text-emerald-600 font-bold">+$920</span>
+                    <span className="text-slate-600 font-medium">Faculty Mentor</span>
+                    <span className="text-emerald-600 font-bold">Assigned</span>
                   </div>
                   <div className="p-2 rounded-lg bg-slate-50 flex items-center justify-between text-[11px]">
-                    <span className="text-slate-600 font-medium">Analytics</span>
-                    <span className="text-emerald-600 font-bold">+$1,450</span>
+                    <span className="text-slate-600 font-medium">Lab Check-In</span>
+                    <span className="text-sky-600 font-bold">Active</span>
                   </div>
                 </div>
               </div>
 
-              {/* Card 3: Photo Portrait with Floating Pills */}
+              {/* Card 3: Photo Portrait with Floating Intervention Pills */}
               <div 
                 className="arc-card w-48 sm:w-52 shrink-0 rounded-2xl overflow-hidden shadow-2xl relative h-64 border border-white/80 group"
                 style={{
@@ -116,21 +118,21 @@ export default function Hero() {
               >
                 <img
                   src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80"
-                  alt="AI Strategist Consultant"
+                  alt="Faculty Mentor & Student Advisor"
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-2">
                   <span className="px-2.5 py-1 rounded-full bg-white/95 text-slate-900 font-bold text-[11px] shadow">
-                    $2,670
+                    Case #8941
                   </span>
                   <span className="px-2.5 py-1 rounded-full bg-white/95 text-slate-900 font-bold text-[11px] shadow">
-                    $1,200
+                    Lab Matched
                   </span>
                 </div>
               </div>
 
-              {/* Card 4: Center-Left - Area Wave Chart */}
+              {/* Card 4: Center-Left - Cohort Retention Trajectory */}
               <div 
                 className="arc-card w-52 sm:w-56 shrink-0 rounded-2xl bg-white p-4 shadow-2xl border border-white/90 z-20"
                 style={{
@@ -138,7 +140,7 @@ export default function Hero() {
                 }}
               >
                 <div className="text-[11px] font-semibold text-slate-700 mb-2">
-                  Intelligence in <br /> Every Decision
+                  Cohort Retention <br /> Recovery Curve
                 </div>
                 <div className="h-28 flex items-center justify-center">
                   <svg viewBox="0 0 160 70" className="w-full h-full overflow-visible">
@@ -172,19 +174,19 @@ export default function Hero() {
                 <div>
                   <div className="flex items-center gap-1.5 text-[#d2f831] text-xs font-mono mb-2">
                     <span className="w-2 h-2 rounded-full bg-[#d2f831]" />
-                    <span className="font-semibold uppercase tracking-wider text-[10px]">Expertise</span>
+                    <span className="font-semibold uppercase tracking-wider text-[10px]">Orchestration</span>
                   </div>
                   <h4 className="font-display font-bold text-sm leading-snug text-white">
-                    that Combines Strategy, Data, and Artificial Intelligence
+                    that Combines Provenance, Faculty Mentors, and Ethical Care
                   </h4>
                 </div>
                 <div className="pt-4 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
-                  <span>Smarter Growth</span>
+                  <span>No Alert Without Action</span>
                   <ArrowUpRight className="w-4 h-4 text-[#d2f831]" />
                 </div>
               </div>
 
-              {/* Card 6: Frosted Cyan Glass Card - Data Training */}
+              {/* Card 6: Frosted Cyan Glass Card - Signal Ingestion */}
               <div 
                 className="arc-card w-48 sm:w-52 shrink-0 rounded-2xl bg-white/20 backdrop-blur-xl border border-white/40 p-5 text-white shadow-2xl flex flex-col items-center justify-center text-center h-56"
                 style={{
@@ -194,11 +196,11 @@ export default function Hero() {
                 <div className="w-10 h-10 rounded-full bg-white/30 backdrop-blur-md flex items-center justify-center text-white mb-3 shadow">
                   <Plus className="w-5 h-5 stroke-[2.5]" />
                 </div>
-                <span className="font-bold text-sm text-white">Data training</span>
-                <span className="text-[11px] text-white/80 mt-1">Upload your dataset</span>
+                <span className="font-bold text-sm text-white">Signal Intake</span>
+                <span className="text-[11px] text-white/80 mt-1">Sync Canvas LMS &amp; SIS</span>
               </div>
 
-              {/* Card 7: 520k+ Metric Card */}
+              {/* Card 7: 520k+ Support Data Points */}
               <div 
                 className="arc-card w-44 sm:w-48 shrink-0 rounded-2xl bg-white p-4 shadow-xl border border-white/80"
                 style={{
@@ -206,17 +208,17 @@ export default function Hero() {
                 }}
               >
                 <div className="flex items-center gap-2 text-slate-400 text-[10px] uppercase font-bold tracking-wider mb-2">
-                  <span>Data Points</span>
+                  <span>Support Signals</span>
                 </div>
                 <div className="font-display font-extrabold text-2xl text-slate-950">
                   520k+
                 </div>
                 <p className="text-[10px] text-slate-500 mt-2 leading-tight">
-                  Analyzed monthly to power intelligent strategies.
+                  Analyzed monthly to power proactive, non-stigmatizing care.
                 </p>
               </div>
 
-              {/* Card 8: Far Right - Dark Mobile Mockup */}
+              {/* Card 8: Far Right - Dark Mobile Mockup SLA Track */}
               <div 
                 className="arc-card w-44 sm:w-48 shrink-0 rounded-2xl bg-[#0d131f] p-4 text-white shadow-xl border border-slate-800"
                 style={{
@@ -224,20 +226,20 @@ export default function Hero() {
                 }}
               >
                 <div className="flex items-center justify-between text-[10px] text-slate-400 mb-2">
-                  <span>KPI Track</span>
-                  <span className="text-emerald-400 font-bold">+49%</span>
+                  <span>SLA Adherence</span>
+                  <span className="text-emerald-400 font-bold">98.2%</span>
                 </div>
                 <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden mb-3">
-                  <div className="h-full bg-emerald-400 rounded-full w-[72%]" />
+                  <div className="h-full bg-emerald-400 rounded-full w-[98%]" />
                 </div>
                 <div className="space-y-1.5 text-[10px] text-slate-300">
                   <div className="flex justify-between">
-                    <span>Automation</span>
-                    <span className="text-white font-bold">99.4%</span>
+                    <span>Avg Turnaround</span>
+                    <span className="text-white font-bold">36h</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Adoption</span>
-                    <span className="text-white font-bold">94.1%</span>
+                    <span>Case Follow-Up</span>
+                    <span className="text-white font-bold">100%</span>
                   </div>
                 </div>
               </div>
@@ -248,7 +250,7 @@ export default function Hero() {
           {/* Social Proof Rating under the clouds */}
           <div className="mt-6 text-center">
             <p className="text-xs font-semibold text-white/90 tracking-wide">
-              Rated 4.9/5 by 4,900+ clients
+              Rated 4.9/5 across 4,900+ institutional cases
             </p>
             <div className="flex items-center justify-center gap-1 mt-1.5">
               {[...Array(5)].map((_, i) => (

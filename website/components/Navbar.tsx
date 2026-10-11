@@ -9,9 +9,9 @@ export default function Navbar() {
   return (
     <nav className="w-full pt-6 px-6 sm:px-10 lg:px-14 relative z-30">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        {/* Brand Logo */}
+        {/* Brand Logo: Sutra */}
         <a href="#" className="flex items-center gap-2.5 text-white group">
-          {/* Logo icon: Folded white ribbon mark from image */}
+          {/* Logo icon: Folded ribbon mark from design */}
           <div className="w-7 h-7 flex items-center justify-center">
             <svg
               viewBox="0 0 28 28"
@@ -28,7 +28,7 @@ export default function Navbar() {
             </svg>
           </div>
           <span className="font-display font-bold text-xl sm:text-2xl tracking-tight text-white">
-            Aeline
+            Sutra
           </span>
         </a>
 
@@ -38,22 +38,22 @@ export default function Navbar() {
             href="#"
             className="hover:text-white transition-colors"
           >
-            HOME
+            OVERVIEW
           </a>
           <a
-            href="#services"
+            href="#orchestration"
             className="hover:text-white transition-colors text-white/80"
           >
-            SERVICES
+            ORCHESTRATION
           </a>
           <a
             href="#about"
             className="hover:text-white transition-colors text-white/80"
           >
-            ABOUT US
+            ABOUT SUTRA
           </a>
           <div className="relative group cursor-pointer flex items-center gap-1 text-white/80 hover:text-white">
-            <span>MORE LINKS</span>
+            <span>GOVERNANCE</span>
             <ChevronDown className="w-3.5 h-3.5 stroke-[2.5]" />
           </div>
         </div>
@@ -61,10 +61,12 @@ export default function Navbar() {
         {/* Right Action Button */}
         <div className="hidden sm:flex items-center gap-4">
           <a
-            href="#buy"
+            href="http://localhost:3000/dashboard"
+            target="_blank"
+            rel="noreferrer"
             className="px-5 py-2.5 rounded-full bg-[#d2f831] hover:bg-[#c4ec26] text-slate-950 text-xs font-bold uppercase tracking-wider transition-all duration-200 shadow-sm hover:shadow hover:scale-[1.02]"
           >
-            BUY TEMPLATE
+            LAUNCH CONSOLE
           </a>
         </div>
 
@@ -85,25 +87,27 @@ export default function Navbar() {
         <div className="md:hidden mt-4 p-5 rounded-2xl bg-slate-900/95 backdrop-blur-xl border border-white/10 text-white space-y-4">
           <div className="flex flex-col space-y-3 text-xs font-bold uppercase tracking-wider">
             <a href="#" onClick={() => setMobileMenuOpen(false)} className="py-1">
-              HOME
+              OVERVIEW
             </a>
-            <a href="#services" onClick={() => setMobileMenuOpen(false)} className="py-1 text-white/70">
-              SERVICES
+            <a href="#orchestration" onClick={() => setMobileMenuOpen(false)} className="py-1 text-white/70">
+              ORCHESTRATION
             </a>
             <a href="#about" onClick={() => setMobileMenuOpen(false)} className="py-1 text-white/70">
-              ABOUT US
+              ABOUT SUTRA
             </a>
             <a href="#projects" onClick={() => setMobileMenuOpen(false)} className="py-1 text-white/70">
-              PORTFOLIO
+              CASE WORKFLOWS
             </a>
           </div>
           <div className="pt-3 border-t border-white/10">
             <a
-              href="#buy"
+              href="http://localhost:3000/dashboard"
+              target="_blank"
+              rel="noreferrer"
               onClick={() => setMobileMenuOpen(false)}
               className="w-full block text-center py-2.5 rounded-full bg-[#d2f831] text-slate-950 font-bold text-xs uppercase tracking-wider"
             >
-              BUY TEMPLATE
+              LAUNCH CONSOLE
             </a>
           </div>
         </div>

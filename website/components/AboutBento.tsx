@@ -18,11 +18,11 @@ export default function AboutBento() {
         <div className="text-center max-w-4xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 text-xs font-bold tracking-widest text-slate-500 uppercase mb-4">
             <span className="w-1.5 h-1.5 rounded-full bg-slate-900" />
-            <span>ABOUT US</span>
+            <span>ABOUT SUTRA</span>
           </div>
 
           <h2 className="text-3xl sm:text-5xl md:text-6xl font-display font-extrabold tracking-tight text-slate-900 leading-[1.18]">
-            A global consulting partner <br />
+            An institutional orchestration partner <br />
             dedicated to building{" "}
             <span className="inline-flex items-center align-middle mx-1 px-2.5 py-1 rounded-full bg-[#38bdf8] text-white shadow-sm">
               <Globe className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -32,7 +32,7 @@ export default function AboutBento() {
             <span className="inline-flex items-center align-middle mx-1 px-2.5 py-1 rounded-full bg-[#d2f831] text-slate-950 shadow-sm">
               <Lightbulb className="w-5 h-5 sm:w-6 sm:h-6" />
             </span>{" "}
-            <span className="text-slate-400 font-bold">more adaptive</span>
+            <span className="text-slate-400 font-bold">more accountable</span>
           </h2>
         </div>
 
@@ -44,7 +44,7 @@ export default function AboutBento() {
             {/* Top Bar inside card */}
             <div className="flex items-center justify-between relative z-10">
               <span className="font-display font-black text-xl tracking-tighter text-white">
-                IPSUM
+                SUTRA
               </span>
               <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
                 <div className="flex items-end gap-0.5 h-3">
@@ -55,11 +55,11 @@ export default function AboutBento() {
               </div>
             </div>
 
-            {/* Photo of person against blue sky */}
+            {/* Photo of student / mentor against blue sky */}
             <div className="absolute inset-0 z-0 flex items-center justify-center pt-10">
               <img
                 src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=700&q=80"
-                alt="Cloud Consultant"
+                alt="Student & Mentor Success"
                 className="w-full h-full object-cover object-top opacity-95"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#1681eb]/90 via-transparent to-transparent" />
@@ -71,7 +71,7 @@ export default function AboutBento() {
                 120+
               </div>
               <p className="text-xs text-slate-600 font-medium mt-1 leading-snug">
-                Collaborating with leading AI and cloud technology providers.
+                Academic departments actively resolving support cases with strict SLAs.
               </p>
             </div>
           </div>
@@ -80,7 +80,7 @@ export default function AboutBento() {
           <div className="lg:col-span-4 rounded-[28px] bg-[#f8fafc] border border-slate-100 p-7 flex flex-col justify-between min-h-[460px] shadow-sm">
             <div>
               <p className="text-xs font-semibold text-slate-500">
-                Commitment to measurable
+                Commitment to follow-through
               </p>
               <div className="font-display font-extrabold text-5xl sm:text-6xl text-slate-950 tracking-tight mt-3">
                 100%
@@ -94,14 +94,14 @@ export default function AboutBento() {
                   <img
                     key={i}
                     src={src}
-                    alt="Customer"
+                    alt="Dean of Students"
                     className="w-9 h-9 rounded-full object-cover border-2 border-white shadow-sm"
                   />
                 ))}
               </div>
 
               <blockquote className="text-xs sm:text-sm text-slate-700 leading-relaxed font-normal">
-                &ldquo;Their automation strategy completely reshaped how we work. It&apos;s efficient, intelligent, and seamless.&rdquo;
+                &ldquo;SUTRA replaced passive alert fatigue with owned, empathetic cases. Every student check-in is verified, dignified, and timely.&rdquo;
               </blockquote>
             </div>
           </div>
@@ -119,14 +119,14 @@ export default function AboutBento() {
                 </div>
               </div>
               <p className="text-xs sm:text-sm text-slate-800 font-medium leading-snug">
-                Analyzed monthly to power smarter business strategies.
+                Synthesized monthly to power proactive, policy-backed interventions.
               </p>
             </div>
 
             {/* Card 4: Dark Charcoal Card */}
             <div className="rounded-[28px] bg-[#111625] p-7 text-white flex items-center justify-between shadow-lg">
               <span className="text-sm font-semibold text-slate-300">
-                Continents
+                Partner Campuses
               </span>
               <span className="font-display font-extrabold text-4xl sm:text-5xl text-white tracking-tight">
                 20+

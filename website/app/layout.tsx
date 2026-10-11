@@ -15,9 +15,9 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Aeline — Building the future with AI and strategy",
+  title: "SUTRA — Building the Future of Student Support | No Alert Without Action",
   description:
-    "We help organizations unlock growth and efficiency through data-driven consulting and intelligent automation.",
+    "We help universities unlock student persistence through evidence-driven triage and policy-governed intervention orchestration.",
 };
 
 export default function RootLayout({
@@ -27,7 +27,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${jakarta.variable} scroll-smooth`}>
-      <body className="bg-white text-slate-900 antialiased selection:bg-[#d2f831] selection:text-slate-900">
+      <body className="bg-white text-slate-900 antialiased selection:bg-[#d2f831] selection:text-slate-950">
         {children}
       </body>
     </html>
