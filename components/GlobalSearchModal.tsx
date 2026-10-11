@@ -66,16 +66,16 @@ export function GlobalSearchModal() {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-start justify-center pt-24 p-4 bg-black/35 backdrop-blur-sm animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 flex items-start justify-center pt-14 sm:pt-20 p-3 sm:p-4 bg-black/35 backdrop-blur-sm animate-in fade-in duration-200"
       onClick={() => setIsSearchOpen(false)}
     >
       <div
-        className="w-full max-w-xl bg-white rounded-3xl shadow-2xl border border-neutral-100 overflow-hidden"
+        className="w-full max-w-xl bg-white rounded-2xl sm:rounded-3xl shadow-2xl border border-neutral-100 overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search Input Bar */}
-        <div className="p-4 px-5 border-b border-neutral-100 flex items-center gap-3">
-          <Search className="w-5 h-5 text-neutral-400" />
+        <div className="p-3.5 sm:p-4 px-4 sm:px-5 border-b border-neutral-100 flex items-center gap-3 min-h-[52px]">
+          <Search className="w-5 h-5 text-neutral-400 flex-shrink-0" />
           <input
             ref={inputRef}
             type="text"
@@ -87,18 +87,25 @@ export function GlobalSearchModal() {
           {searchQuery && (
             <button
               onClick={() => setSearchQuery("")}
-              className="p-1 hover:bg-neutral-100 rounded-full text-neutral-400"
+              className="p-1.5 hover:bg-neutral-100 rounded-full text-neutral-400"
+              aria-label="Clear search"
             >
               <X className="w-4 h-4" />
             </button>
           )}
-          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-neutral-100 text-neutral-500">
+          <span className="hidden sm:inline text-[10px] font-mono px-2 py-0.5 rounded bg-neutral-100 text-neutral-500">
             ESC
           </span>
+          <button
+            onClick={() => setIsSearchOpen(false)}
+            className="sm:hidden text-xs font-semibold text-neutral-600 hover:text-neutral-900 px-1 py-1"
+          >
+            Cancel
+          </button>
         </div>
 
         {/* Results Stream */}
-        <div className="p-4 max-h-[60vh] overflow-y-auto space-y-4">
+        <div className="p-3 sm:p-4 max-h-[70vh] sm:max-h-[60vh] overflow-y-auto space-y-4">
           {/* Courses */}
           {filteredCourses.length > 0 && (
             <div>

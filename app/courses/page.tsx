@@ -17,7 +17,14 @@ export default function CoursesPage() {
     activeCourseFilter,
     setActiveCourseFilter,
     setIsNewCourseModalOpen,
+    toggleCourseLive,
+    duplicateCourse,
+    deleteCourse,
+    updateCourseStatus,
+    students,
   } = useSkillHub();
+
+  const [openMenuCourseId, setOpenMenuCourseId] = useState<string | null>(null);
 
   const tabs = ["All Courses", "Published", "Drafts", "Archived"];
 
@@ -26,17 +33,19 @@ export default function CoursesPage() {
     return c.status === activeCourseFilter;
   });
 
+  const upcomingLive = courses.find((c) => c.isUpcomingLive) || courses[0];
+
   return (
     <div className="space-y-6">
       {/* 1. HEADER: Title and New Course Button */}
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
         <h1 className="text-2xl md:text-3xl font-extrabold text-neutral-900 tracking-tight font-heading">
           Courses
         </h1>
 
         <button
           onClick={() => setIsNewCourseModalOpen(true)}
-          className="flex items-center gap-2 px-5 py-2.5 bg-neutral-900 hover:bg-neutral-800 active:scale-[0.98] text-white rounded-full text-xs font-semibold shadow-sm transition-all"
+          className="flex items-center justify-center gap-2 px-5 py-2.5 bg-neutral-900 hover:bg-neutral-800 active:scale-[0.98] text-white rounded-full text-xs font-semibold shadow-sm transition-all min-h-[44px] self-start sm:self-auto"
         >
           <Plus className="w-4 h-4" />
           <span>New Course</span>
@@ -44,12 +53,12 @@ export default function CoursesPage() {
       </div>
 
       {/* 2. FILTER TABS: All Courses, Published, Drafts, Archived */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
         {tabs.map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveCourseFilter(tab)}
-            className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
+            className={`px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all min-h-[36px] ${
               activeCourseFilter === tab
                 ? "bg-neutral-900 text-white shadow-sm"
                 : "bg-white text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100/70 border border-neutral-200/50"
@@ -67,7 +76,7 @@ export default function CoursesPage() {
           {filteredCourses.map((course) => (
             <div
               key={course.id}
-              className="skill-card bg-white p-5 flex flex-col justify-between group hover:shadow-skill-hover transition-all duration-200"
+              className="skill-card bg-white p-5 flex flex-col justify-between group hover:shadow-skill-hover transition-all duration-200 relative"
             >
               <div>
                 {/* 3D Image Artwork + Menu */}
@@ -77,12 +86,80 @@ export default function CoursesPage() {
                     alt={course.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                  <button
-                    className="absolute top-3 right-3 p-1.5 rounded-full bg-white/80 backdrop-blur-md hover:bg-white text-neutral-400 hover:text-neutral-800 shadow-sm transition-colors"
-                    title="Course Options"
-                  >
-                    <MoreVertical className="w-4 h-4" />
-                  </button>
+                  <div className="absolute top-3 right-3">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setOpenMenuCourseId(
+                          openMenuCourseId === course.id ? null : course.id
+                        );
+                      }}
+                      className="p-1.5 rounded-full bg-white/80 backdrop-blur-md hover:bg-white text-neutral-400 hover:text-neutral-800 shadow-sm transition-colors"
+                      title="Course Options"
+                    >
+                      <MoreVertical className="w-4 h-4" />
+                    </button>
+
+                    {/* Dynamic Action Dropdown */}
+                    {openMenuCourseId === course.id && (
+                      <div
+                        onClick={(e) => e.stopPropagation()}
+                        className="absolute right-0 top-8 z-30 bg-white rounded-2xl shadow-2xl border border-neutral-100 p-1.5 w-44 space-y-0.5 animate-in fade-in zoom-in-95 duration-150"
+                      >
+                        <button
+                          onClick={() => {
+                            toggleCourseLive(course.id);
+                            setOpenMenuCourseId(null);
+                          }}
+                          className="w-full text-left px-3 py-2 text-xs font-medium text-neutral-700 hover:bg-neutral-50 rounded-xl transition-colors flex items-center justify-between"
+                        >
+                          <span>{course.isUpcomingLive ? "End Live" : "Go Live"}</span>
+                          <span
+                            className={`w-2 h-2 rounded-full ${
+                              course.isUpcomingLive ? "bg-rose-500" : "bg-neutral-300"
+                            }`}
+                          />
+                        </button>
+                        <button
+                          onClick={() => {
+                            duplicateCourse(course.id);
+                            setOpenMenuCourseId(null);
+                          }}
+                          className="w-full text-left px-3 py-2 text-xs font-medium text-neutral-700 hover:bg-neutral-50 rounded-xl transition-colors"
+                        >
+                          Duplicate Course
+                        </button>
+                        <button
+                          onClick={() => {
+                            updateCourseStatus(
+                              course.id,
+                              course.status === "Published" ? "Drafts" : "Published"
+                            );
+                            setOpenMenuCourseId(null);
+                          }}
+                          className="w-full text-left px-3 py-2 text-xs font-medium text-neutral-700 hover:bg-neutral-50 rounded-xl transition-colors"
+                        >
+                          Mark as {course.status === "Published" ? "Draft" : "Published"}
+                        </button>
+                        <button
+                          onClick={() => {
+                            deleteCourse(course.id);
+                            setOpenMenuCourseId(null);
+                          }}
+                          className="w-full text-left px-3 py-2 text-xs font-medium text-rose-600 hover:bg-rose-50 rounded-xl transition-colors"
+                        >
+                          Delete Course
+                        </button>
+                      </div>
+                    )}
+                  </div>
+
+                  {course.isUpcomingLive && (
+                    <div className="absolute bottom-3 left-3 flex items-center gap-1.5 px-2.5 py-0.5 bg-rose-50/90 backdrop-blur-md border border-rose-200/60 rounded-full text-[10px] font-bold text-rose-600 shadow-xs">
+                      <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-live-pulse" />
+                      <span>Live Session</span>
+                    </div>
+                  )}
                 </div>
 
                 {/* Title & Subtitle */}
@@ -99,21 +176,14 @@ export default function CoursesPage() {
                 <div className="flex items-center justify-between text-xs">
                   {/* Avatars */}
                   <div className="flex items-center -space-x-2">
-                    <img
-                      src="/assets/avatar-marvin.jpg"
-                      alt="Student"
-                      className="w-6 h-6 rounded-full object-cover ring-2 ring-white"
-                    />
-                    <img
-                      src="/assets/avatar-albert.jpg"
-                      alt="Student"
-                      className="w-6 h-6 rounded-full object-cover ring-2 ring-white"
-                    />
-                    <img
-                      src="/assets/avatar-bessie.jpg"
-                      alt="Student"
-                      className="w-6 h-6 rounded-full object-cover ring-2 ring-white"
-                    />
+                    {students.slice(0, 3).map((s) => (
+                      <img
+                        key={s.id}
+                        src={s.avatar}
+                        alt={s.name}
+                        className="w-6 h-6 rounded-full object-cover ring-2 ring-white"
+                      />
+                    ))}
                     <span className="text-[10px] font-bold text-neutral-600 pl-3">
                       {course.studentsCount}
                     </span>

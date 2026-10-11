@@ -60,6 +60,7 @@ export const CURRENT_USER = {
   name: "Sarah",
   fullName: "Sarah Wilson",
   role: "Lead Product Designer & Educator",
+  email: "sarah.wilson@sutra.design",
   avatar: "/assets/avatar-sarah.jpg",
   unreadMessages: 3,
   unreadNotifications: 5,

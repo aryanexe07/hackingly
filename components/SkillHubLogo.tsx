@@ -65,7 +65,7 @@ export function SkillHubLogo({ className = "", light = false }: { className?: st
           light ? "text-white" : "text-neutral-900"
         }`}
       >
-        SkillHub
+        Sutra
       </span>
     </div>
   );

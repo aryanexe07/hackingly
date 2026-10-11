@@ -42,7 +42,7 @@ export default function LoginPage() {
           {/* Bottom Hero Copy */}
           <div className="relative z-10 pt-20">
             <h2 className="text-3xl md:text-4xl font-extrabold text-neutral-900 tracking-tight leading-tight font-heading">
-              Learn, connect &amp; grow with SkillHub.
+              Learn, connect &amp; grow with Sutra.
             </h2>
             <p className="text-sm font-medium text-neutral-700 mt-3 leading-relaxed max-w-sm">
               Your all-in-one platform for courses, community and continuous learning.
@@ -61,7 +61,7 @@ export default function LoginPage() {
             {/* Header Titles */}
             <div className="text-center mb-8">
               <h1 className="text-2xl font-bold text-neutral-900 tracking-tight font-heading">
-                {isSignUp ? "Create Your Account" : "Sign In to SkillHub"}
+                {isSignUp ? "Create Your Account" : "Sign In to Sutra"}
               </h1>
               <p className="text-xs text-neutral-400 mt-1.5 font-medium">
                 {isSignUp
@@ -208,7 +208,7 @@ export default function LoginPage() {
 
           {/* Footer copyright */}
           <div className="text-center text-[11px] text-neutral-400 font-medium pt-4">
-            © SkillHub 2026
+            © Sutra 2026
           </div>
         </div>
       </div>
